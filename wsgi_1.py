@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import datetime
 
-default = "No Value Set"
+default = "127.0.0.1"
 
 body = """<html>
 <head>
@@ -21,12 +21,18 @@ def application(environ, start_response):
 
     response_body = body.format(
         software=environ.get('SERVER_SOFTWARE', default),
-        path="aaaa",
-        month="bbbb",
-        date="cccc",
-        year="dddd",
-        client_ip="eeee"
+        # path="aaaa",
+        # month="bbbb",
+        # date="cccc",
+        # year="dddd",
+        # client_ip="eeee"
+        path=environ['COMPUTERNAME'],
+        month=datetime.datetime.today().strftime("%B"),
+        date=datetime.date.today().day,
+        year=datetime.date.today().year,
+        client_ip=environ['REMOTE_ADDR']
     )
+
     status = '200 OK'
 
     response_headers = [('Content-Type', 'text/html'),
